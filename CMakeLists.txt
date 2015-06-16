@@ -22,7 +22,7 @@ set(VERSION_PATCH 1)
 
 # TLSH uses only half the counting buckets.
 # It can use all the buckets now.
-set(TLSH_BUCKETS_128 1)
+set(TLSH_BUCKETS_128 2)
 if(TLSH_BUCKETS_128 EQUAL 1)
   set(TLSH_HASH "compact hash")
 else()
@@ -32,7 +32,7 @@ endif()
 
 # TLSH uses 1 byte checksum. The collision rate is 1 in 24.
 # It can use 3 bytes checksum now. That collision rate in 1 in 5800.
-set(TLSH_CHECKSUM_1B 1)
+set(TLSH_CHECKSUM_1B 2)
 if(TLSH_CHECKSUM_1B EQUAL 1)
   set(TLSH_CHECKSUM "1 byte checksum")
 else()
@@ -58,8 +58,9 @@ file(WRITE include/version.h
   "#define TLSH_CHECKSUM \"${TLSH_CHECKSUM}\"\n")
 
 if (CMAKE_BUILD_TYPE STREQUAL Debug)
-    set(CMAKE_CXX_FLAGS "-g")
+    set(BUILD_POSTFIX "_d")
 else(CMAKE_BUILD_TYPE STREQUAL Debug)
+    set(BUILD_POSTFIX "")
     if(CMAKE_COMPILER_IS_GNUCXX)
         set(CMAKE_CXX_FLAGS "-O2")        ## Optimize
     endif()
